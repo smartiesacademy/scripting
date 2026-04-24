@@ -24,7 +24,7 @@ Additionally, there are also optional fields available which are: `displayName`,
 `displayName`: Display name of the script. <br> 
 `author`: Name of the script's creator.<br>
 `version`: Version number of the script (e.g., 1.0).<br>
-`description`: Brief explanation of the script's functionality.<br>
+`description`: Brief explanation of the script's functionality.<br>7
 `minSnapchatVersion`: Minimum required Snapchat version code (e.g., 106822).<br>
 `minSEVersion`: Minimum required SnapEnhance version code (e.g., ).<br>
 `permissions`: Grant permissions to the script (e.g. unsafe-classloader)<br>
