@@ -7,17 +7,17 @@
 // ==/SE_module==
 
 module.onSnapMainActivityCreate = activity => {
-    shortToast("Snapchat opened!")
+    shortToast("TEST 1")
 }
 
 module.onSnapApplicationLoad = context => {
-    shortToast("Snapchat loaded!")
+    shortToast("TEST 2")
 }
 
 module.onSnapEnhanceLoad = context => {
-    shortToast("SnapEnhance loaded!")
+    shortToast("TEST 3")
 }
 
 module.onUnload = () => {
-    shortToast("Script unloaded!")
+    shortToast("TEST 4")
 }
