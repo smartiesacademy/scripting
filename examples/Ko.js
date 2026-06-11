@@ -1,12 +1,13 @@
 // ==SE_module==
 // name: nyx_power_toolbox
 // displayName: Nyx Power Toolbox
-// description: All-in-one conversation tools - downloads, stealth, fun actions
+// description: All-in-one fun & useful conversation tools
 // version: 1.0
 // author: Nyx
 // ==/SE_module==
 
 var im = require('interface-manager')
+var messaging = require('messaging')
 
 module.onSnapApplicationLoad = context => {
     im.create("conversationToolbox", (builder, args) => {
@@ -14,50 +15,49 @@ module.onSnapApplicationLoad = context => {
         builder.text("🔥 Nyx Power Toolbox")
         builder.text("Conv ID: " + convId)
 
-        // Download tools
-        builder.button("Download All Media", () => {
-            try {
-                const mediaManager = context.getMediaManager() // or similar available API
-                mediaManager.downloadConversationMedia(convId)
-                shortToast("Downloading all media...")
-            } catch(e) {
-                longToast("Download started")
+        // Messaging tools
+        builder.button("Send Hello from Nyx", () => {
+            messaging.sendChatMessage(convId, "🔥 Enhanced by Nyx Power Toolbox!", (error) => {
+                if (error != null) {
+                    longToast("Failed: " + error)
+                } else {
+                    shortToast("Message sent!")
+                }
+            })
+        })
+
+        builder.button("Fetch Recent Messages", () => {
+            var statusText = builder.text("Fetching...")
+            messaging.fetchConversationWithMessages(convId, (error, messageList) => {
+                if (error != null) {
+                    statusText.setAttribute("label", "Error: " + error)
+                    return
+                }
+                statusText.setAttribute("label", messageList.size() + " messages fetched")
+                shortToast("Loaded " + messageList.size() + " messages")
+            })
+        })
+
+        // Download / Save (triggers native behavior where possible)
+        builder.button("Trigger Media Save", () => {
+            longToast("Attempting to save visible media...")
+            // Native downloader can be triggered via other hooks if enabled in Purrfect settings
+        })
+
+        // Fun / Spam
+        builder.button("Spam Reactions (limited)", () => {
+            shortToast("Sending reactions...")
+            // Limited by API; combine with native reaction features
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    messaging.sendChatMessage(convId, "❤️", (e) => {})
+                }, i * 600)
             }
         })
 
-        builder.button("Save Visible Snap", () => {
-            longToast("Saving current media")
-            // Hook or trigger current media save
-        })
-
-        // Stealth tools
-        builder.button("Enable Full Stealth", () => {
-            // These are usually toggled via built-in features or hooks
-            longToast("Stealth mode active (use module settings too)")
-        })
-
-        builder.button("Spoof Typing (15s)", () => {
-            longToast("Spoofing typing...")
-            // Spoof via messaging hooks if available
-            setTimeout(() => longToast("Typing spoof ended"), 15000)
-        })
-
-        builder.button("Spoof Location", () => {
-            longToast("Location spoofed (NYC)")
-        })
-
-        // Fun stuff
-        builder.button("Spam Reactions", () => {
-            longToast("Spamming reactions 🔥")
-            // Use messaging API for reactions
-        })
-
-        builder.button("Send Test Message", () => {
-            longToast("Fake message sent")
-        })
-
-        builder.button("Mark Read", () => {
-            longToast("Marked as read")
+        // Stealth / Info (toasts for feedback)
+        builder.button("Stealth Status", () => {
+            longToast("Combine with Purrfect native stealth settings for full effect")
         })
 
         builder.button("Dismiss", () => {
